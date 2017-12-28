@@ -13596,6 +13596,8 @@ with pkgs;
   bitcoin = altcoins.bitcoin;
   bitcoin-xt = altcoins.bitcoin-xt;
 
+  bitscope = callPackage ../applications/science/electronics/bitscope/packages.nix { };
+
   cryptop = callPackage ../applications/altcoins/cryptop { };
 
   libbitcoin = callPackage ../tools/misc/libbitcoin/libbitcoin.nix {
