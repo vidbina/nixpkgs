@@ -31,6 +31,7 @@ stdenv.mkDerivation rec {
   version = "2.2.2";
 
   buildInputs = [
+    curl
     libevent
     libtool
     libudev
@@ -50,7 +51,6 @@ stdenv.mkDerivation rec {
   ];
 
   utilPkgs = [
-    curl
     #file
     git
     #less
