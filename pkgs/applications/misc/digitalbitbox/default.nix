@@ -84,12 +84,15 @@ in
 
   installPhase = ''
     make install
-    mkdir -p $out/bin $out/lib
+    mkdir -p "$out/bin" "$out/lib"
     cp src/libbtc/.libs/*.so* $out/lib
     cp src/libbtc/src/secp256k1/.libs/*.so* $out/lib
     cp src/hidapi/libusb/.libs/*.so* $out/lib
     cp src/univalue/.libs/*.so* $out/lib
     rm -rf $PWD
+
+    mkdir -p "$out/etc/udev/rules.d"
+    printf "SUBSYSTEM==\"usb\", TAG+=\"uaccess\", TAG+=\"udev-acl\", SYMLINK+=\"dbb%%n\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2402\"\n" | tee $out/etc/udev/rules.d/51-hid-digitalbitbox.rules > /dev/null && printf "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2402\", TAG+=\"uaccess\", TAG+=\"udev-acl\", SYMLINK+=\"dbbf%%n\"\n" | tee $out/etc/udev/rules.d/52-hid-digitalbitbox.rules > /dev/null
   '';
 
   postInstall = ''
