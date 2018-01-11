@@ -38,6 +38,13 @@ in
  stdenv.mkDerivation rec {
   name = "dbb-app";
 
+  meta = {
+    description = "A QT based application for the Digital Bitbox hardware wallet";
+    homepage = "https://digitalbitbox.com/";
+    license = stdenv.lib.licenses.mit;
+    platforms = stdenv.lib.platforms.linux;
+  };
+
   src = fetchFromGitHub {
     owner = "digitalbitbox";
     repo = "dbb-app";
