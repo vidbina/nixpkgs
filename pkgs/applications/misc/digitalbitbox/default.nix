@@ -4,22 +4,23 @@
   buildFHSUserEnv,
   curl,
   fetchFromGitHub,
-  gcc49,
+  gcc5,
   git,
   libevent,
   libtool,
+  libqrencode,
   libudev,
   libusb,
-  libqrencode,
   makeWrapper,
   pkgconfig,
-  qt56,
+  qt59,
   stdenv,
-  tree,
-  writeScriptBin
+  tree
 }:
 
 let
+  gcc = gcc5;
+  qt = qt59;
   reqPkgs = [
     curl
     libevent
@@ -28,7 +29,7 @@ let
     libusb
     libqrencode
     pkgconfig
-    qt56.full
+    qt.full
   ];
   fhsEnv = buildFHSUserEnv {
     name = "dbb-fhs";
@@ -59,26 +60,20 @@ in
   gccPkgs = [
     autoconf
     automake
-    gcc49
-    #makeWrapper
+    gcc
   ];
 
   utilPkgs = [
-    #file
     git
-    #less
-    #strace
-    tree
-    #which
   ];
 
-  QTDIR="${qt56.qtbase.dev}";
+  QTDIR="${qt.qtbase.dev}";
 
-  MOC="${qt56.qtbase.dev}/bin/moc";
-  UIC="${qt56.qtbase.dev}/bin/uic";
-  RCC="${qt56.qtbase.dev}/bin/rcc";
-  LRELEASE="${qt56.qttools.dev}/bin/lrelease";
-  LUPDATE="${qt56.qttools.dev}/bin/lupdate";
+  MOC="${qt.qtbase.dev}/bin/moc";
+  UIC="${qt.qtbase.dev}/bin/uic";
+  RCC="${qt.qtbase.dev}/bin/rcc";
+  LRELEASE="${qt.qttools.dev}/bin/lrelease";
+  LUPDATE="${qt.qttools.dev}/bin/lupdate";
 
   configurePhase = ''
     ./autogen.sh
