@@ -86,7 +86,7 @@ in
   '';
 
   hardeningDisable = [
-    "all"
+    "format"
   ];
 
   installPhase = ''
