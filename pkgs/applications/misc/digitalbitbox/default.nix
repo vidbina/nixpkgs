@@ -13,8 +13,7 @@
   makeWrapper,
   pkgconfig,
   qt59,
-  stdenv,
-  tree
+  stdenv
 }:
 
 let
