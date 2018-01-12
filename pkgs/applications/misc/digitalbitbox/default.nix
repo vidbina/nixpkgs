@@ -19,25 +19,14 @@
 let
   gcc = gcc5;
   qt = qt59;
-  reqPkgs = [
-    curl
-    libevent
-    libtool
-    libudev
-    libusb
-    libqrencode
-    pkgconfig
-    qt.full
-  ];
-in
- stdenv.mkDerivation rec {
+in stdenv.mkDerivation rec {
   name = "dbb-app";
 
-  meta = {
+  meta = with stdenv.lib; {
     description = "A QT based application for the Digital Bitbox hardware wallet";
     homepage = "https://digitalbitbox.com/";
-    license = stdenv.lib.licenses.mit;
-    platforms = stdenv.lib.platforms.linux;
+    license = licenses.mit;
+    platforms = platforms.linux;
   };
 
   src = fetchFromGitHub {
@@ -49,7 +38,22 @@ in
 
   version = "2.2.2";
 
-  buildInputs = reqPkgs ++ gccPkgs ++ utilPkgs;
+  buildInputs = with stdenv.lib; flatten [
+    reqPkgs
+    gccPkgs
+    utilPkgs
+  ];
+
+  reqPkgs = [
+    curl
+    libevent
+    libtool
+    libudev
+    libusb
+    libqrencode
+    pkgconfig
+    qt.full
+  ];
 
   gccPkgs = [
     autoconf
