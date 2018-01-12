@@ -1,7 +1,6 @@
 {
   autoconf,
   automake,
-  buildFHSUserEnv,
   curl,
   fetchFromGitHub,
   gcc5,
@@ -31,10 +30,6 @@ let
     pkgconfig
     qt.full
   ];
-  fhsEnv = buildFHSUserEnv {
-    name = "dbb-fhs";
-    targetPkgs = pkgs: reqPkgs;
-  };
 in
  stdenv.mkDerivation rec {
   name = "dbb-app";
