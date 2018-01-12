@@ -27,6 +27,9 @@ in stdenv.mkDerivation rec {
     homepage = "https://digitalbitbox.com/";
     license = licenses.mit;
     platforms = platforms.linux;
+    maintainers = with maintainers; [
+      vidbina
+    ];
   };
 
   src = fetchFromGitHub {
