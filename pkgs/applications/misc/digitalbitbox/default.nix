@@ -1,4 +1,5 @@
 {
+  stdenv,
   autoconf,
   automake,
   curl,
@@ -13,7 +14,6 @@
   makeWrapper,
   pkgconfig,
   qt59,
-  stdenv,
   withDebug ? false
 }:
 
