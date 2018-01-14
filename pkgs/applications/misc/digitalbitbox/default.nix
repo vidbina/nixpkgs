@@ -21,7 +21,7 @@ let
   gcc = gcc5;
   qt = qt59;
 in stdenv.mkDerivation rec {
-  name = "dbb-app";
+  name = "dbb-app-${version}";
 
   meta = with stdenv.lib; {
     description = "A QT based application for the Digital Bitbox hardware wallet";
