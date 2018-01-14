@@ -13,7 +13,8 @@
   makeWrapper,
   pkgconfig,
   qt59,
-  stdenv
+  stdenv,
+  withDebug ? false
 }:
 
 let
@@ -76,9 +77,11 @@ in stdenv.mkDerivation rec {
   LRELEASE="${qt.qttools.dev}/bin/lrelease";
   LUPDATE="${qt.qttools.dev}/bin/lupdate";
 
-  configurePhase = ''
+  configurePhase = with stdenv.lib; let
+    debugFlag = optionalString withDebug "--enable-debug";
+  in ''
     ./autogen.sh
-    ./configure --prefix=$out --enable-debug --enable-libusb $configureFlags
+    ./configure --prefix=$out ${debugFlag} --enable-libusb $configureFlags
   '';
 
   hardeningDisable = [
