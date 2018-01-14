@@ -90,6 +90,7 @@ in stdenv.mkDerivation rec {
 
   installPhase = ''
     make install
+
     mkdir -p "$out/bin" "$out/lib"
     cp src/libbtc/.libs/*.so* $out/lib
     cp src/libbtc/src/secp256k1/.libs/*.so* $out/lib
