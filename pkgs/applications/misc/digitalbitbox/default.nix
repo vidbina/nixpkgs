@@ -31,20 +31,22 @@ in stdenv.mkDerivation rec {
 
   version = "2.2.2";
 
+  nativeBuildInputs = with stdenv.lib; flatten [
+    [ curl pkgconfig ]
+    gccPkgs
+  ];
+
   buildInputs = with stdenv.lib; flatten [
     reqPkgs
-    gccPkgs
     utilPkgs
   ];
 
   reqPkgs = [
-    curl
     libevent
     libtool
     libudev
     libusb
     libqrencode
-    pkgconfig
     qt.full
   ];
 
