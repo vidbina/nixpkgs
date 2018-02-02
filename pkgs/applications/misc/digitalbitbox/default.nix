@@ -1,7 +1,6 @@
 {
   stdenv,
-  autoconf,
-  automake,
+  autoreconfHook,
   curl,
   fetchFromGitHub,
   gcc5,
@@ -32,13 +31,12 @@ in stdenv.mkDerivation rec {
   version = "2.2.2";
 
   nativeBuildInputs = with stdenv.lib; flatten [
-    [ curl pkgconfig ]
     gccPkgs
+    utilPkgs
   ];
 
   buildInputs = with stdenv.lib; flatten [
     reqPkgs
-    utilPkgs
   ];
 
   reqPkgs = [
@@ -51,13 +49,14 @@ in stdenv.mkDerivation rec {
   ];
 
   gccPkgs = [
-    autoconf
-    automake
+    autoreconfHook
     gcc
   ];
 
   utilPkgs = [
+    curl
     git
+    pkgconfig
   ];
 
   QTDIR="${qt.qtbase.dev}";
@@ -68,7 +67,6 @@ in stdenv.mkDerivation rec {
   LRELEASE="${qt.qttools.dev}/bin/lrelease";
   LUPDATE="${qt.qttools.dev}/bin/lupdate";
 
-  preConfigure = "./autogen.sh";
   configureFlags = [
     "--enable-libusb"
   ];
