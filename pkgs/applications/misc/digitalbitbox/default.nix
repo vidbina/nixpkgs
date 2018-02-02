@@ -23,16 +23,6 @@ let
 in stdenv.mkDerivation rec {
   name = "dbb-app-${version}";
 
-  meta = with stdenv.lib; {
-    description = "A QT based application for the Digital Bitbox hardware wallet";
-    homepage = "https://digitalbitbox.com/";
-    license = licenses.mit;
-    platforms = platforms.linux;
-    maintainers = with maintainers; [
-      vidbina
-    ];
-  };
-
   src = fetchFromGitHub {
     owner = "digitalbitbox";
     repo = "dbb-app";
@@ -106,4 +96,14 @@ in stdenv.mkDerivation rec {
     wrapProgram "$out/bin/dbb-cli" --prefix LD_LIBRARY_PATH : "$out/lib"
     wrapProgram "$out/bin/dbb-app" --prefix LD_LIBRARY_PATH : "$out/lib"
   '';
+
+  meta = with stdenv.lib; {
+    description = "A QT based application for the Digital Bitbox hardware wallet";
+    homepage = "https://digitalbitbox.com/";
+    license = licenses.mit;
+    platforms = platforms.linux;
+    maintainers = with maintainers; [
+      vidbina
+    ];
+  };
 }
