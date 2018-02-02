@@ -51,6 +51,7 @@ in stdenv.mkDerivation rec {
   gccPkgs = [
     autoreconfHook
     gcc
+    makeWrapper
   ];
 
   utilPkgs = [
@@ -75,9 +76,7 @@ in stdenv.mkDerivation rec {
     "format"
   ];
 
-  installPhase = ''
-    make install
-
+  postInstall = ''
     mkdir -p "$out/bin" "$out/lib"
     cp src/libbtc/.libs/*.so* $out/lib
     cp src/libbtc/src/secp256k1/.libs/*.so* $out/lib
@@ -87,9 +86,7 @@ in stdenv.mkDerivation rec {
 
     mkdir -p "$out/etc/udev/rules.d"
     printf "SUBSYSTEM==\"usb\", TAG+=\"uaccess\", TAG+=\"udev-acl\", SYMLINK+=\"dbb%%n\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2402\"\n" | tee $out/etc/udev/rules.d/51-hid-digitalbitbox.rules > /dev/null && printf "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{idVendor}==\"03eb\", ATTRS{idProduct}==\"2402\", TAG+=\"uaccess\", TAG+=\"udev-acl\", SYMLINK+=\"dbbf%%n\"\n" | tee $out/etc/udev/rules.d/52-hid-digitalbitbox.rules > /dev/null
-  '';
 
-  postInstall = ''
     wrapProgram "$out/bin/dbb-cli" --prefix LD_LIBRARY_PATH : "$out/lib"
     wrapProgram "$out/bin/dbb-app" --prefix LD_LIBRARY_PATH : "$out/lib"
   '';
