@@ -20,6 +20,7 @@ let
   qt = qt59;
 in stdenv.mkDerivation rec {
   name = "dbb-app-${version}";
+  version = "2.2.2";
 
   src = fetchFromGitHub {
     owner = "digitalbitbox";
@@ -28,18 +29,16 @@ in stdenv.mkDerivation rec {
     sha256 = "1r77fvqrlaryzij5dfbnigzhvg1d12g96qb2gp8dy3xph1j0k3s1";
   };
 
-  version = "2.2.2";
-
-  nativeBuildInputs = with stdenv.lib; flatten [
-    gccPkgs
-    utilPkgs
+  nativeBuildInputs = with stdenv.lib; [
+    autoreconfHook
+    curl
+    gcc
+    git
+    makeWrapper
+    pkgconfig
   ];
 
-  buildInputs = with stdenv.lib; flatten [
-    reqPkgs
-  ];
-
-  reqPkgs = [
+  buildInputs = with stdenv.lib; [
     libevent
     libtool
     libudev
@@ -48,25 +47,12 @@ in stdenv.mkDerivation rec {
     qt.full
   ];
 
-  gccPkgs = [
-    autoreconfHook
-    gcc
-    makeWrapper
-  ];
-
-  utilPkgs = [
-    curl
-    git
-    pkgconfig
-  ];
-
-  QTDIR="${qt.qtbase.dev}";
-
-  MOC="${qt.qtbase.dev}/bin/moc";
-  UIC="${qt.qtbase.dev}/bin/uic";
-  RCC="${qt.qtbase.dev}/bin/rcc";
-  LRELEASE="${qt.qttools.dev}/bin/lrelease";
   LUPDATE="${qt.qttools.dev}/bin/lupdate";
+  LRELEASE="${qt.qttools.dev}/bin/lrelease";
+  MOC="${qt.qtbase.dev}/bin/moc";
+  QTDIR="${qt.qtbase.dev}";
+  RCC="${qt.qtbase.dev}/bin/rcc";
+  UIC="${qt.qtbase.dev}/bin/uic";
 
   configureFlags = [
     "--enable-libusb"
@@ -99,9 +85,9 @@ in stdenv.mkDerivation rec {
     description = "A QT based application for the Digital Bitbox hardware wallet";
     homepage = "https://digitalbitbox.com/";
     license = licenses.mit;
-    platforms = platforms.linux;
     maintainers = with maintainers; [
       vidbina
     ];
+    platforms = platforms.linux;
   };
 }
