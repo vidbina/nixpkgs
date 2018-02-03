@@ -77,6 +77,7 @@
   ./programs/chromium.nix
   ./programs/command-not-found/command-not-found.nix
   ./programs/dconf.nix
+  ./programs/digitalbitbox.nix
   ./programs/environment.nix
   ./programs/fish.nix
   ./programs/freetds.nix
