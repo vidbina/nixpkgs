@@ -47,6 +47,10 @@ buildPythonApplication rec {
     pygtk
   ];
 
+  preFixup = ''
+    gappsWrapperArgs+=(--unset XMODIFIERS)
+  '';
+
   # screenkey does not have any tests
   doCheck = false;
 
