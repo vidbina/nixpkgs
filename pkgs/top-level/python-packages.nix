@@ -23416,7 +23416,7 @@ EOF
     disabled = !isPy27; # error: invalid command 'bdist_wheel'
 
     propagatedBuildInputs = with self; with pkgs; [
-      intltool (with xorg; [libX11 libXtst xmodmap]) # from pkgs
+      intltool tango-icon-theme (with xorg; [libX11 libXtst xmodmap]) # from pkgs
       distutils_extra pygtk setuptools xlib # from self
     ];
 
@@ -23430,6 +23430,7 @@ EOF
     '';
 
     preFixup = ''
+      $(mkdir -p $out/share/icons/gnome; cd ${iconPkg}/share/icons/Tango; cp -R . $out/share/icons/gnome)
       wrapProgram $out/bin/screenkey --unset XMODIFIERS
     '';
 
