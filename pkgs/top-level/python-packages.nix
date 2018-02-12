@@ -23416,20 +23416,30 @@ EOF
     disabled = !isPy27; # error: invalid command 'bdist_wheel'
 
     propagatedBuildInputs = with self; with pkgs; [
-      intltool (with xorg; [libX11 libXtst xmodmap]) # from pkgs
+      intltool tango-icon-theme (with xorg; [libX11 libXtst xmodmap]) # from pkgs
       distutils_extra pygtk setuptools xlib # from self
     ];
 
     preConfigure = with pkgs; ''
+      substituteInPlace data/screenkey.desktop \
+        --replace "preferences-desktop-keyboard-shortcuts" "${iconPkg}/${icon}"
+
       substituteInPlace setup.py --replace "/usr/share" "./share"
 
+      substituteInPlace Screenkey/screenkey.py \
+        --replace "preferences-desktop-keyboard-shortcuts" "${iconPkg}/${icon}"
       substituteInPlace Screenkey/xlib.py \
         --replace "libX11.so.6" "${xorg.libX11}/lib/libX11.so.6"
       substituteInPlace Screenkey/xlib.py \
         --replace "libXtst.so.6" "${xorg.libXtst}/lib/libXtst.so.6"
     '';
 
+    tangoIcon = "48x48/apps/preferences-desktop-keyboard-shortcuts.png";
+    iconPkg = pkgs.tango-icon-theme;
+    icon = "share/icons/Tango/${tangoIcon}";
+
     preFixup = ''
+      $(cd ${iconPkg}; cp --parents ${icon} $out)
       wrapProgram $out/bin/screenkey --unset XMODIFIERS
     '';
 
