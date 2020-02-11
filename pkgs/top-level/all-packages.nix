@@ -7461,6 +7461,8 @@ in
 
   dbmate = callPackage ../development/tools/database/dbmate { };
 
+  deno = callPackage ../development/tools/rust/deno { };
+
   devpi-client = callPackage ../development/tools/devpi-client {};
 
   devpi-server = callPackage ../development/tools/devpi-server {};
