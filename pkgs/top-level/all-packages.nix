@@ -22295,7 +22295,9 @@ in
 
   wofi = callPackage ../applications/misc/wofi { };
 
-  wordnet = callPackage ../applications/misc/wordnet { };
+  wordnet = callPackage ../applications/misc/wordnet {
+    inherit (darwin.apple_sdk.frameworks) Cocoa;
+  };
 
   wordgrinder = callPackage ../applications/office/wordgrinder { };
 
@@ -22909,9 +22911,7 @@ in
 
   arena = callPackage ../games/arena {};
 
-  arx-libertatis = libsForQt5.callPackage ../games/arx-libertatis {
-    stdenv = gcc6Stdenv;
-  };
+  arx-libertatis = libsForQt5.callPackage ../games/arx-libertatis { };
 
   asc = callPackage ../games/asc {
     lua = lua5_1;

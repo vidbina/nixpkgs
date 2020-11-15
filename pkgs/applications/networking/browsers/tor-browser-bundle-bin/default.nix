@@ -91,19 +91,19 @@ let
   fteLibPath = makeLibraryPath [ stdenv.cc.cc gmp ];
 
   # Upstream source
-  version = "10.0";
+  version = "10.0.4";
 
   lang = "en-US";
 
   srcs = {
     x86_64-linux = fetchurl {
       url = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux64-${version}_${lang}.tar.xz";
-      sha256 = "1l2rfknffnh6hsi16dzps1wav5s723vyk57fzv9y5vjmbcbf7l2l";
+      sha256 = "sha256-2Ye1+mhFnkZnAYQXgKZ5YIOiIVaiunTCyCOM+ZExw2I==";
     };
 
     i686-linux = fetchurl {
       url = "https://dist.torproject.org/torbrowser/${version}/tor-browser-linux32-${version}_${lang}.tar.xz";
-      sha256 = "0x80w02ckb6mznrm1gjdpkxk9yf2rdcl16ljjglivq358a309cl2";
+      sha256 = "sha256-B0WGkIt8KDtma/WGyenQ04ctKE7AantUtYnwsjAZZb0=";
     };
   };
 in
@@ -232,9 +232,10 @@ stdenv.mkDerivation rec {
 
     # Preload extensions by moving into the runtime instead of storing under the
     # user's profile directory.
-    mkdir -p "$TBB_IN_STORE/browser/extensions"
+    # See https://support.mozilla.org/en-US/kb/deploying-firefox-with-extensions
+    mkdir -p "$TBB_IN_STORE/distribution/extensions"
     mv "$TBB_IN_STORE/TorBrowser/Data/Browser/profile.default/extensions/"* \
-      "$TBB_IN_STORE/browser/extensions"
+      "$TBB_IN_STORE/distribution/extensions"
 
     # Hard-code paths to geoip data files.  TBB resolves the geoip files
     # relative to torrc-defaults_path but if we do not hard-code them
